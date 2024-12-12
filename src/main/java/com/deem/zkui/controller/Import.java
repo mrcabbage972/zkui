@@ -104,7 +104,7 @@ public class Import extends HttpServlet {
             if (sbFile.toString().length() == 0) {
                 uploadFileName = scmServer + scmFileRevision + "@" + scmFilePath;
                 logger.debug("P4 file Processing " + uploadFileName);
-                dao.insertHistory((String) request.getSession().getAttribute("authName"), request.getRemoteAddr(), "Importing P4 File: " + uploadFileName + "<br/>" + "Overwrite: " + scmOverwrite);
+                dao.insertHistory((String) request.getSession().getAttribute("authName"), request.getRemoteAddr(), "Importing P4 File: " + uploadFileName + "<br/>" + "Overwrite: " + scmOverwrite + "\n");
                 URL url = new URL(uploadFileName);
                 URLConnection conn = url.openConnection();
                 inpStream = conn.getInputStream();
@@ -139,9 +139,9 @@ public class Import extends HttpServlet {
             ZooKeeperUtil.INSTANCE.importData(importFile, Boolean.valueOf(scmOverwrite), ServletUtil.INSTANCE.getZookeeper(request, response, zkServerLst[0], globalProps));
             for (String line : importFile) {
                 if (line.startsWith("-")) {
-                    dao.insertHistory((String) request.getSession().getAttribute("authName"), request.getRemoteAddr(), "File: " + uploadFileName + ", Deleting Entry: " + line);
+                    dao.insertHistory((String) request.getSession().getAttribute("authName"), request.getRemoteAddr(), "File: " + uploadFileName + ", Deleting Entry: " + line + "\n");
                 } else {
-                    dao.insertHistory((String) request.getSession().getAttribute("authName"), request.getRemoteAddr(), "File: " + uploadFileName + ", Adding Entry: " + line);
+                    dao.insertHistory((String) request.getSession().getAttribute("authName"), request.getRemoteAddr(), "File: " + uploadFileName + ", Adding Entry: " + line + "\n");
                 }
             }
             request.getSession().setAttribute("flashMsg", "Import Completed!");

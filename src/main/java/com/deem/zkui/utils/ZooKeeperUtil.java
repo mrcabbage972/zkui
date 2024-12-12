@@ -58,6 +58,7 @@ public enum ZooKeeperUtil {
     public ZooKeeper createZKConnection(String url, Integer zkSessionTimeout) throws IOException, InterruptedException {
         Integer connectAttempt = 0;
         ZooKeeper zk = new ZooKeeper(url, zkSessionTimeout, new Watcher() {
+            // logger.trace( "Connecting to ZK @ " + url + " for " + zkSessionTimeout );
             @Override
             public void process(WatchedEvent event) {
                 logger.trace("Connecting to ZK.");
