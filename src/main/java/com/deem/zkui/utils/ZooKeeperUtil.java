@@ -76,7 +76,6 @@ public enum ZooKeeperUtil {
     }
 
     private ArrayList<ACL> defaultAcl = ZooDefs.Ids.OPEN_ACL_UNSAFE;
-
     private ArrayList<ACL> defaultAcl() {
         return defaultAcl;
     }
@@ -163,7 +162,6 @@ public enum ZooKeeperUtil {
         for (String folder : this.listFolders(zk, path)) {
             exportTreeInternal(entries, this.getNodePath(path, folder), zk, authRole);
         }
-    }
 
     public void importData(List<String> importFile, Boolean overwrite, ZooKeeper zk) throws IOException, InterruptedException, KeeperException {
 
@@ -201,7 +199,6 @@ public enum ZooKeeperUtil {
                         setPropertyValue(path + "/", name, value, zk);
                     } else {
                         logger.info("Skipping update for existing property " + path + "/" + name + " as overwrite is not enabled!");
-                    }
                 }
 
             }
@@ -248,6 +245,7 @@ public enum ZooKeeperUtil {
         }
     }
 
+    }
     public ZKNode listNodeEntries(ZooKeeper zk, String path, String authRole) throws KeeperException, InterruptedException {
         List<String> folders = new ArrayList<>();
         List<LeafBean> leaves = new ArrayList<>();
@@ -299,8 +297,7 @@ public enum ZooKeeperUtil {
                 if (!isFolder) {
                     leaves.add(this.getNodeValue(zk, path, childPath, child, authRole));
                 }
-            }
-        }
+                }\n            }\n        }\n
 
         Collections.sort(leaves, new Comparator<LeafBean>() {
             @Override
@@ -369,54 +366,45 @@ public enum ZooKeeperUtil {
 
     public void createNode(String path, String name, String value, ZooKeeper zk) throws KeeperException, InterruptedException {
         String nodePath = path + name;
-        logger.debug("Creating node " + nodePath + " with value " + value);
         zk.create(nodePath, value == null ? null : value.getBytes(), defaultAcl(), CreateMode.PERSISTENT);
 
     }
 
+    }
     public void createFolder(String folderPath, String propertyName, String propertyValue, ZooKeeper zk) throws KeeperException, InterruptedException {
 
         logger.debug("Creating folder " + folderPath + " with property " + propertyName + " and value " + propertyValue);
         zk.create(folderPath, "".getBytes(), defaultAcl(), CreateMode.PERSISTENT);
-        zk.create(folderPath + "/" + propertyName, propertyValue == null ? null : propertyValue.getBytes(), defaultAcl(), CreateMode.PERSISTENT);
-
+                }\n            }\n        }\n
     }
 
     public void setPropertyValue(String path, String name, String value, ZooKeeper zk) throws KeeperException, InterruptedException {
         String nodePath = path + name;
         logger.debug("Setting property " + nodePath + " to " + value);
         zk.setData(nodePath, value.getBytes(), -1);
-
     }
 
     public boolean nodeExists(String nodeFullPath, ZooKeeper zk) throws KeeperException, InterruptedException {
-        logger.trace("Checking if exists: " + nodeFullPath);
         return zk.exists(nodeFullPath, false) != null;
     }
 
-    public void deleteFolders(List<String> folderNames, ZooKeeper zk) throws KeeperException, InterruptedException {
 
         for (String folderPath : folderNames) {
             deleteFolderInternal(folderPath, zk);
-        }
 
     }
 
-    private void deleteFolderInternal(String folderPath, ZooKeeper zk) throws KeeperException, InterruptedException {
 
         logger.debug("Deleting folder " + folderPath);
-        for (String child : zk.getChildren(folderPath, false)) {
-            deleteFolderInternal(getNodePath(folderPath, child), zk);
+    }
         }
         zk.delete(folderPath, -1);
     }
 
     public void deleteLeaves(List<String> leafNames, ZooKeeper zk) throws InterruptedException, KeeperException {
-
         for (String leafPath : leafNames) {
             logger.debug("Deleting leaf " + leafPath);
             zk.delete(leafPath, -1);
-        }
     }
 
     private void deleteNodeIfExists(String path, ZooKeeper zk) throws InterruptedException, KeeperException {

@@ -54,10 +54,9 @@ public class Main {
             globalProps.load(new FileInputStream("config.cfg"));
         } else {
             System.out.println("Please create config.cfg properties file and then execute the program!");
+            System.err.println("Please create config.cfg properties file and then execute the program!");
             System.exit(1);
-        }
 
-        globalProps.setProperty("uptime", new Date().toString());
         new Dao(globalProps).checkNCreate();
 
         String webFolder = "webapp";

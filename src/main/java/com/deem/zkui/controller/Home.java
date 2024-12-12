@@ -101,7 +101,7 @@ public class Home extends HttpServlet {
 
         } catch (KeeperException | InterruptedException | TemplateException ex) {
             logger.error(Arrays.toString(ex.getStackTrace()));
-            ServletUtil.INSTANCE.renderError(request, response, ex.getMessage());
+            ServletUtil.INSTANCE.renderError(request, response, ex);
         }
 
     }
@@ -197,7 +197,7 @@ public class Home extends HttpServlet {
 
         } catch (InterruptedException | TemplateException | KeeperException ex) {
             logger.error(Arrays.toString(ex.getStackTrace()));
-            ServletUtil.INSTANCE.renderError(request, response, ex.getMessage());
+            ServletUtil.INSTANCE.renderError(request, response, ex);
         }
     }
 }

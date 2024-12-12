@@ -54,7 +54,7 @@ public class ChangeLog extends HttpServlet {
             ServletUtil.INSTANCE.renderHtml(request, response, templateParam, "history.ftl.html");
         } catch (TemplateException ex) {
             logger.error(Arrays.toString(ex.getStackTrace()));
-            ServletUtil.INSTANCE.renderError(request, response, ex.getMessage());
+            ServletUtil.INSTANCE.renderError(request, response, ex.getMessage(), ex);
         }
 
     }
@@ -80,8 +80,8 @@ public class ChangeLog extends HttpServlet {
                 response.sendRedirect("/history");
             }
         } catch (TemplateException ex) {
-            logger.error(Arrays.toString(ex.getStackTrace()));
-            ServletUtil.INSTANCE.renderError(request, response, ex.getMessage());
+            logger.error(ex.getMessage(), ex);
+            ServletUtil.INSTANCE.renderError(request, response, ex.getMessage(), ex);
         }
     }
 }

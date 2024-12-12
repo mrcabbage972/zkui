@@ -50,7 +50,6 @@ public class Dao {
             flyway.setDataSource(globalProps.getProperty("jdbcUrl"), globalProps.getProperty("jdbcUser"), globalProps.getProperty("jdbcPwd"));
             //Will wipe db each time. Avoid this in prod.
             if (globalProps.getProperty("env").equals("dev")) {
-                flyway.clean();
             }
             //Remove the above line if deploying to prod.
             flyway.migrate();

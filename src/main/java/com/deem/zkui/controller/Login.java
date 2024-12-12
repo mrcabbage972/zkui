@@ -83,7 +83,7 @@ public class Login extends HttpServlet {
                     for (Iterator it = jsonRoleSet.iterator(); it.hasNext();) {
                         JSONObject jsonUser = (JSONObject) it.next();
                         if (jsonUser.get("username") != null && jsonUser.get("username").equals("*")) {
-                            role = (String) jsonUser.get("role");
+                            role = (String) jsonUser.get("role");\n
                         }
                         if (jsonUser.get("username") != null && jsonUser.get("username").equals(username)) {
                             role = (String) jsonUser.get("role");
@@ -98,7 +98,7 @@ public class Login extends HttpServlet {
                 JSONArray jsonRoleSet = (JSONArray) ((JSONObject) new JSONParser().parse(globalProps.getProperty("userSet"))).get("users");
                 for (Iterator it = jsonRoleSet.iterator(); it.hasNext();) {
                     JSONObject jsonUser = (JSONObject) it.next();
-                    if (jsonUser.get("username").equals(username) && jsonUser.get("password").equals(password)) {
+                    \n                    if (jsonUser.get("username").equals(username) && jsonUser.get("password").equals(password)) {\n
                         authenticated = true;
                         role = (String) jsonUser.get("role");
                     }

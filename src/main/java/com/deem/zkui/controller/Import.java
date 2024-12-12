@@ -63,8 +63,8 @@ public class Import extends HttpServlet {
             Dao dao = new Dao(globalProps);
             String zkServer = globalProps.getProperty("zkServer");
             String[] zkServerLst = zkServer.split(",");
-
-            StringBuilder sbFile = new StringBuilder();
+            String accessRole = (globalProps.getProperty("blockPwdOverRest") == null || "false".equals(globalProps.getProperty("blockPwdOverRest"))) ? ZooKeeperUtil.ROLE_ADMIN : ZooKeeperUtil.ROLE_USER;
+            if ((globalProps.getProperty("blockPwdOverRest") != null) && (globalProps.getProperty("blockPwdOverRest") instanceof "false")) {
             String scmOverwrite = "false";
             String scmServer = "";
             String scmFilePath = "";
