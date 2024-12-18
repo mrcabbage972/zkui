@@ -113,28 +113,22 @@ public class RestAccess extends HttpServlet {
                     searchPath.add(lookupPath + "/" + appName + "/" + hostName);
                 }
 
-            } else if (appName != null && clusterName != null) {
                 //Order in which these paths are listed is important as the lookup happens in that order.
-                //Precedence is give to cluster over app.
+--- START OF FILE: src/main/java/com/deem/zkui/dao/Dao.java <FILE_NAME_END>
                 if (ZooKeeperUtil.INSTANCE.nodeExists(lookupPath + "/" + hostName, zk)) {
                     searchPath.add(lookupPath + "/" + hostName);
                 }
-                if (ZooKeeperUtil.INSTANCE.nodeExists(lookupPath + "/" + appName, zk)) {
                     searchPath.add(lookupPath + "/" + appName);
-                }
+--- START OF FILE: src/main/java/com/deem/zkui/domain/History.java <FILE_NAME_END>
                 if (ZooKeeperUtil.INSTANCE.nodeExists(lookupPath + "/" + appName + "/" + hostName, zk)) {
                     searchPath.add(lookupPath + "/" + appName + "/" + hostName);
-                }
                 if (ZooKeeperUtil.INSTANCE.nodeExists(lookupPath + "/" + clusterName, zk)) {
-                    searchPath.add(lookupPath + "/" + clusterName);
                 }
-                if (ZooKeeperUtil.INSTANCE.nodeExists(lookupPath + "/" + clusterName + "/" + hostName, zk)) {
+--- START OF FILE: src/main/java/com/deem/zkui/filter/AuthFilter.java <FILE_NAME_END>
                     searchPath.add(lookupPath + "/" + clusterName + "/" + hostName);
                 }
-                if (ZooKeeperUtil.INSTANCE.nodeExists(lookupPath + "/" + clusterName + "/" + appName, zk)) {
                     searchPath.add(lookupPath + "/" + clusterName + "/" + appName);
                 }
-                if (ZooKeeperUtil.INSTANCE.nodeExists(lookupPath + "/" + clusterName + "/" + appName + "/" + hostName, zk)) {
                     searchPath.add(lookupPath + "/" + clusterName + "/" + appName + "/" + hostName);
                 }
 
@@ -149,19 +143,16 @@ public class RestAccess extends HttpServlet {
                     if (propertyNode != null) {
                         propValue = propertyNode.getStrValue();
                     }
-                }
                 if (propValue != null) {
                     resultOut.append(propName).append("=").append(propValue).append("\n");
                 }
 
             }
 
-            response.setContentType("text/plain;charset=UTF-8");
             try (PrintWriter out = response.getWriter()) {
-                out.write(resultOut.toString());
+--- START OF FILE: src/main/java/com/deem/zkui/listener/SessionListener.java <FILE_NAME_END>
             }
 
-        } catch (KeeperException | InterruptedException ex) {
             logger.error(Arrays.toString(ex.getStackTrace()));
             ServletUtil.INSTANCE.renderError(request, response, ex.getMessage());
         } finally {

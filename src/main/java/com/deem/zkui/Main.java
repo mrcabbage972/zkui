@@ -49,13 +49,13 @@ public class Main {
 
         logger.debug("Starting ZKUI!");
         Properties globalProps = new Properties();
-        File f = new File("config.cfg");
-        if (f.exists()) {
-            globalProps.load(new FileInputStream("config.cfg"));
-        } else {
+        File configFile = new File("zkui.properties");
+        if (configFile.exists()) {
+            try (FileInputStream fis = new FileInputStream("zkui.properties")) {
+                globalProps.load(fis);
             System.out.println("Please create config.cfg properties file and then execute the program!");
             System.exit(1);
-        }
+            System.err.println("Please create zkui.properties properties file and then execute the program!");
 
         globalProps.setProperty("uptime", new Date().toString());
         new Dao(globalProps).checkNCreate();

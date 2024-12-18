@@ -75,7 +75,7 @@ public class ChangeLog extends HttpServlet {
                 templateParam.put("historyLst", historyLst);
                 templateParam.put("historyNode", historyNode);
                 ServletUtil.INSTANCE.renderHtml(request, response, templateParam, "history.ftl.html");
-
+79 |
             } else {
                 response.sendRedirect("/history");
             }

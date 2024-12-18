@@ -94,12 +94,12 @@ public enum ServletUtil {
             HttpSession session = request.getSession();
             ZooKeeper zk = (ZooKeeper) session.getAttribute("zk");
             if (zk == null || zk.getState() != ZooKeeper.States.CONNECTED) {
-                Integer zkSessionTimeout = Integer.parseInt(globalProps.getProperty("zkSessionTimeout"));
+                Integer zkSessionTimeout = Integer.parseInt( globalProps.getProperty("zkSessionTimeout") );
                 //Converting seconds to ms.
-                zkSessionTimeout = zkSessionTimeout * 1000;
-                zk = ZooKeeperUtil.INSTANCE.createZKConnection(zkServer, zkSessionTimeout);
-                ZooKeeperUtil.INSTANCE.setDefaultAcl(globalProps.getProperty("defaultAcl"));
-                if (zk.getState() != ZooKeeper.States.CONNECTED) {
+                zkSessionTimeout *= 1000;
+                zk = ZooKeeperUtil.INSTANCE.createZKConnection( zkServer, zkSessionTimeout );
+                ZooKeeperUtil.INSTANCE.setDefaultAcl( globalProps.getProperty("defaultAcl") );
+                if ( zk.getState() != ZooKeeper.States.CONNECTED) {
                     session.setAttribute("zk", null);
                 } else {
                     session.setAttribute("zk", zk);
@@ -118,15 +118,15 @@ public enum ServletUtil {
             zk.close();
         } catch (Exception ex) {
             logger.error("Error in closing zk,will cause problem in zk! " + ex.getMessage());
-        }
-
+            return zk;
+        } catch (IOException | InterruptedException ex) {
     }
 
     public String externalizeNodeValue(byte[] value) {
         return value == null ? "" : new String(value).replaceAll("\\n", "\\\\n").replaceAll("\\r", "");
         // We might want to BASE64 encode it
     }
-
+        }
     //Using X-Forwarded-For to capture IP addresses coming via load balancer.
     public String getRemoteAddr(HttpServletRequest request) {
         String remoteAddr = request.getHeader("X-Forwarded-For");

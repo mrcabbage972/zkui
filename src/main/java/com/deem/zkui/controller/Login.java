@@ -93,7 +93,6 @@ public class Login extends HttpServlet {
                         role = ZooKeeperUtil.ROLE_USER;
                     }
 
-                }
             } else {
                 JSONArray jsonRoleSet = (JSONArray) ((JSONObject) new JSONParser().parse(globalProps.getProperty("userSet"))).get("users");
                 for (Iterator it = jsonRoleSet.iterator(); it.hasNext();) {
@@ -107,7 +106,6 @@ public class Login extends HttpServlet {
             if (authenticated) {
                 logger.info("Login successful: " + username);
                 session.setAttribute("authName", username);
-                session.setAttribute("authRole", role);
                 response.sendRedirect("/home");
             } else {
                 session.setAttribute("flashMsg", "Invalid Login");

@@ -358,7 +358,6 @@ public enum ZooKeeperUtil {
         return null;
 
     }
-
     public Boolean checkIfPwdField(String property) {
         if (property.contains("PWD") || property.contains("pwd") || property.contains("PASSWORD") || property.contains("password") || property.contains("PASSWD") || property.contains("passwd")) {
             return true;
@@ -403,7 +402,6 @@ public enum ZooKeeperUtil {
     }
 
     private void deleteFolderInternal(String folderPath, ZooKeeper zk) throws KeeperException, InterruptedException {
-
         logger.debug("Deleting folder " + folderPath);
         for (String child : zk.getChildren(folderPath, false)) {
             deleteFolderInternal(getNodePath(folderPath, child), zk);
@@ -412,7 +410,6 @@ public enum ZooKeeperUtil {
     }
 
     public void deleteLeaves(List<String> leafNames, ZooKeeper zk) throws InterruptedException, KeeperException {
-
         for (String leafPath : leafNames) {
             logger.debug("Deleting leaf " + leafPath);
             zk.delete(leafPath, -1);
