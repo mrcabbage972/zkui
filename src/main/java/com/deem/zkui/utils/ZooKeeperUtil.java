@@ -61,10 +61,10 @@ public enum ZooKeeperUtil {
             @Override
             public void process(WatchedEvent event) {
                 logger.trace("Connecting to ZK.");
-            }
-        });
         //Wait till connection is established.
         while (zk.getState() != ZooKeeper.States.CONNECTED) {
+        });
+        //Wait till connection is established.
             Thread.sleep(30);
             connectAttempt++;
             if (connectAttempt == MAX_CONNECT_ATTEMPT) {

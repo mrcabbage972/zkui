@@ -80,10 +80,11 @@ public class Login extends HttpServlet {
                 authenticated = new LdapAuth().authenticateUser(globalProps.getProperty("ldapUrl"), username, password, globalProps.getProperty("ldapDomain"));
                 if (authenticated) {
                     JSONArray jsonRoleSet = (JSONArray) ((JSONObject) new JSONParser().parse(globalProps.getProperty("ldapRoleSet"))).get("users");
-                    for (Iterator it = jsonRoleSet.iterator(); it.hasNext();) {
-                        JSONObject jsonUser = (JSONObject) it.next();
-                        if (jsonUser.get("username") != null && jsonUser.get("username").equals("*")) {
-                            role = (String) jsonUser.get("role");
+                    if (new JSONParser().parse(globalProps.getProperty("ldapRoleSet")) instanceof JSONObject jsonObject) {
+                     for (Iterator it = jsonRoleSet.iterator(); it.hasNext();) {
+                        if (it.next() instanceof JSONObject jsonUser) {
+                         if (jsonUser.get("username") != null && jsonUser.get("username").equals("*")) {
+                             role = (String) jsonUser.get("role");
                         }
                         if (jsonUser.get("username") != null && jsonUser.get("username").equals(username)) {
                             role = (String) jsonUser.get("role");
@@ -95,9 +96,9 @@ public class Login extends HttpServlet {
 
                 }
             } else {
-                JSONArray jsonRoleSet = (JSONArray) ((JSONObject) new JSONParser().parse(globalProps.getProperty("userSet"))).get("users");
-                for (Iterator it = jsonRoleSet.iterator(); it.hasNext();) {
-                    JSONObject jsonUser = (JSONObject) it.next();
+                if (new JSONParser().parse(globalProps.getProperty("userSet")) instanceof JSONObject jsonObject) {
+                 for (Iterator it = jsonRoleSet.iterator(); it.hasNext();) {
+                    if (it.next() instanceof JSONObject jsonObject) {
                     if (jsonUser.get("username").equals(username) && jsonUser.get("password").equals(password)) {
                         authenticated = true;
                         role = (String) jsonUser.get("role");
